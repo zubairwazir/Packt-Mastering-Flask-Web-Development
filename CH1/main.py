@@ -1,5 +1,6 @@
 from datetime import date
-from flask import Flask, views
+from uuid import uuid4
+from flask import Flask, views, render_template
 
 
 app = Flask(__name__)
@@ -74,6 +75,15 @@ def show_honor_dissmisal(counselor: str, effective_date: date, patient: str):
 
 app.add_url_rule('/certificate/terminate/<string:counselor>/<date:effective_date>/<string:patient>',
                  'show_honor_dissmisal', views.certificates.show_honor_dissmisal)
+
+
+
+@app.route('/exam/passers/list/<float:rate>/<uuid:docId>')
+def report_exam_passers(rating:float, docId:uuid4 = None):
+    exams = list_passing_scores(rating) 
+    response = make_response( 
+        render_template('exam/list_exam_passers.html', exams=exams, docId=docId), 200)    
+    return response 
 
 
 if __name__ == '__main__':
