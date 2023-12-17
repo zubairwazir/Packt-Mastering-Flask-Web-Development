@@ -1,6 +1,6 @@
 from datetime import date
 from uuid import uuid4
-from flask import Flask, views, render_template
+from flask import Flask, make_response, views, render_template
 
 
 app = Flask(__name__)
